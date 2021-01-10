@@ -1,0 +1,24 @@
+GRIGORE IRINA-DOMNICA 
+325CB
+
+								 Tema 1 
+					 --Protocoale de comunicatie--
+
+Pentru aceasta tema am scris cod care parseaza tabela de rutare, am implemetat
+procesul de dirijare si ceea ce tine de protocolul ICMP.
+
+Parsarea tabelei de rutare: initial calculez numarul de linii din fisierul
+"rtable.txt" pentru a stii cu cat aloc struct route_table_entry *rtable, apoi 
+completez tabela de rutare.
+
+Dupa completarea tabelei de rutare, o sortez folosing merge sort pentru a avea 
+complexitate de O(nlogn). In mometul in care primesc un pachet, iar acesta are 
+protocol de tip IP, cauta in tabela de rutare cea mai specifica intrare, folosind 
+cautarea binara. Daca prefixul a fost gasit, se cauta in tabela arp intrarea 
+corespunzatoare, apoi pachetul este trimis pe acea interfata.
+
+Daca mesajul din pachetul IP este de tip ICMP si router-ul primeste pe una din interfete un ECHO REQUEST, este creat un nou pachet in care destinatia este adresa ip de unde a venit pachetul initial, iar sursa este reprezentata de adresa ip a interfetei pe care a venit pachetul. De asemenea, campul type din header-ul de ICMP il comppletez cu macro-ul ICMP_ECHOREPLY, apoi trimit pachetul creat la dreasa de unde a venit. Daca ttl-ul este expirat, creeaz acelasi pachet doar ca type-ul din ICMP header il completez cu ICMP_TIME_EXCEEDED. Procedez la fel si in cazul in care ruta nu este gasita in tabela de rutare si arunc pachetul initial.
+
+Mentionez ca am luat functia de ip_checksum din sheletul din laboratorul 4, iar completarea campurilor celor 3 headere am realizat-o asemanator cu ce am avut in laboratorul 5.
+
+Pe langa fisierul router.c in care am se afla implementate o parte dintre functionalitatile unui router, am si un fisier structures.h in care se afla structura pentru tabela de rutare si structura de arp.
