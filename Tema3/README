@@ -1,0 +1,31 @@
+GRIGORE IRINA-DOMNICA
+325CB
+
+							TEMA3 PC
+
+    Pentru implementarea acestei tema am avut ca punct de plecarea labortaorul
+cu numarul 10. Am facut modificari in fisierele client.c, requests.c si pe 
+langa acestea am mai adaugat fisierul commands.c.
+
+	Fifiserul client.c contine main-ul. Aici primesc comenzile de la tastatura
+in functie de comanda respectiva apelez functia corespunzatoare. Pe langa asta, 
+fac si unele verificari pentru ca programul sa mearca cum trebuie, si anume:
+daca un utilizator este deja conectat, nu poate sa se mai conecteze din nou
+decat dupa ce da comanda logout; daca un utilizator vrea sa dea comanda 
+enter_library acesta va putea avea acces la librarie doar dupa ce a facut login;
+de asemenea, un utilizator nu va putea adauga, sterge, vedea informatii despre
+o carte decat daca are acces la biblioteca.
+
+	Fisierul requests.c contine functii ce ma ajuta sa construiesc cererile 
+catre server. Functia compute_get_request completeaza head-ul diferit, de aceea 
+unul dintre parametrii functiei este command care ma ajuta sa diferentiez 
+comenzile care trebuie sa contina cookie-ul in cerere de cele care au campul 
+Authorization. La fel procedez si in cazul functie compute_post_request, unde 
+pentru completarea zonei de date ma folosesc de parson. Pe langa functiile care 
+ma ajuta sa creez cererea pentru server, exista o functie get_token care extrage
+token-ul care este in format json.
+
+	In commands.c sunt implementate toate comenzile din tema. In toate aceste
+functii, se face, dupa caz, citirea tuturor informatiilor necesare, apoi se creeaza
+cererea pentru server, se trimite si in cele din urma se afiseaza raspunsul
+intors de server.
