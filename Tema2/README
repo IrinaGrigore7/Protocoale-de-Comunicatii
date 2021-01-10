@@ -1,0 +1,51 @@
+Grigore Irina-Domnica 
+325 CB
+
+							Tema2 PC
+
+	In vederea realizarii acestei teme am pornit de la laboratorul numarul 8, cel
+de multiplexare.
+
+	Structurile pe care le-am folosit la aceasta tema se afla in utils.h si sunt:
+- struct udp_message care retine informatiile primite de la un client udp;
+- struct tcp_message retine informatiile pe care le poate primi un client tcp
+de la tastaura;
+- struct topic_struct retine pentru fiecare client tcp la ce topic este abonat
+si daca are sf setat;
+- struct client_struct: pentru fiecare client retin la ce topicuri s-a abonat.
+
+	In fisierul client.c multiplexez intre:
+- cititul de la tastatura: daca ptimesc comanda exit, ies din while si inchid
+socket-ul; daca primesc "subscribe topic sf" sau "unsubscribe topic", completez 
+structura de tcp_message si o trimit server-ului.
+- primesc ceva de la server, adica un mesaj udp. Dupa ce am primit mesajul, il 
+prelucrez conform cerintelor temei si il printez.
+
+	In fisierul server.c multiplexez intre:
+-cititul de la tastatura, unde singura comanda acceptata este exit. In acest caz
+trimit tuturor clientilor tcp conectati in acel moment la server un mesaj de 
+exit in urma caruia trebuie sa-si inchida conexiunea, iar la final inchid
+si cei doi socketi, cel udp pe care primesc date si cel tcp pe care ascult.
+-daca mi-a venit un mesaj pe socket-ul udp atunci iterez prin toata lista
+de clienti conectati in momentul ala, iar celor care sunt abonati la topicul
+respectiv le trimit mesajul. De asemenea, mai fac o interare prin lista
+clientilor deconectati, dar care sunt inca abonati la anmite topice, si au SF = 1, 
+stochez mesajele respective in lista de udp-msg aflata in structura client_struct.
+-daca un client tcp vrea sa se conecteze la server, fac accept, adaug noul socket in
+FD_SET, verfic daca acesta se afla in lista de clienti deconectati. Daca se afla,
+ii trimit toate mesajele pe care le-a primit cat timp a fost deconectat, apoi il 
+sterg din lista de clienti deconectati si il adaug din nou in cea de clienti conectati
+pentru a putea primi in continuare date. In cazul in care, acel client nu s-a mai
+conectat inainte, verific daca are un id valid, apoi il adaug in lista de clienti
+conectati la server.
+-daca s-a primit un mesaj de subscribe sau unsubscribe de la unul din clientii
+tcp conectati la server, atunci actualizez lista de topicuri la care acesta 
+vrea sa se aboneze sau sa se dezaboneza. De asemenea, daca acesta vrea sa se
+deconecteza il adaug in lista clientilor deconectati, il scot atat din lista
+clientilor deconectati cat si din fd_set.
+
+	Imi pare rau ca nu am modularizat codul, intentionam s-o fac dar din 
+pacate nu am mai avut timp pentru acest lucru.
+
+	In arhiva am inclus si un Makefile, din care eu am utilizat doar regulile de
+build si clean.
