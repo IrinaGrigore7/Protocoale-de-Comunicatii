@@ -1,0 +1,19 @@
+a.	dig A single-v4.protocoale.xyz
+b.	dig AAAA single-v4.protocoale.xyz
+c.  dig MX protocoale.xyz
+d.  dig +noall +authority single-v4.protocoale.xyz
+e.	dig mail.gedart.com. google.com +short
+	dig art-telecom.ru. google.com +short
+f. 	dig -f file +noall +answer
+		single-v4.protocoale.xyz. 300	IN	A	127.0.0.1
+		multi-v4.protocoale.xyz. 300	IN	A	127.4.4.4
+		multi-v4.protocoale.xyz. 300	IN	A	127.2.2.2
+		multi-v4.protocoale.xyz. 300	IN	A	127.3.3.3
+		multi-v4.protocoale.xyz. 300	IN	A	127.1.1.1
+		multi.protocoale.xyz.	300	IN	A	127.4.4.4
+		multi.protocoale.xyz.	300	IN	A	127.1.1.1
+		multi.protocoale.xyz.	300	IN	A	127.3.3.3
+		multi.protocoale.xyz.	300	IN	A	127.2.2.2
+g. 	dig @8.8.8.8 test.dorinel.protocoale.xyz +noall +answer +trace
+	dig -x 89.26.249.70 +noall +answer
+h. dig -x single-v4.protocoale.xyz 
